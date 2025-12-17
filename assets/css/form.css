@@ -1,0 +1,108 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+body {
+    background: #f4f4f9;
+    color: #333;
+}
+
+.form-container {
+    width: 400px;
+    margin: 80px auto;
+    background: #fff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 25px;
+    font-weight: bold;
+}
+
+input, select {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border-radius: 6px;
+    border: 1px solid #aaa;
+    font-size: 16px;
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 15px;
+    background: #ff5e57;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #ff3b30;
+}
+
+.btn-small {
+    width: auto;
+    padding: 8px 15px;
+    font-size: 14px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    background: #444;
+}
+
+.btn-small:hover {
+    background: #222;
+}
+
+p {
+    text-align: center;
+    margin-top: 15px;
+    font-size: 14px;
+}
+
+p a {
+    color: #ff5e57;
+    text-decoration: none;
+}
+
+p a:hover {
+    text-decoration: underline;
+}
+
+#password-strength {
+    font-size: 14px;
+    margin-top: 3px;
+}
+
+.remember-me {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+}
+
+.remember-me input {
+    margin-right: 5px;
+}
+.remember-me label {
+    cursor: pointer;
+}
+
+header nav .btn-logout {
+    background: #6b050e;
+    color: #fff;
+}
+
+header nav .btn-logout:hover {
+    background: #8a6064;
+}
