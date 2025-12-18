@@ -2,8 +2,6 @@
 session_start();
 include '../php/config.php';
 
-
-// Protect admin page
 if (!isset($_SESSION['admin_id'])) {
     header("Location: admin_login.php");
     exit();
@@ -15,196 +13,197 @@ $success = '';
 if (isset($_POST['add'])) {
 
     $name = trim($_POST['name']);
-    $category = $_POST['category']; // man or woman
+    $category = $_POST['category'];
     $price = $_POST['price'];
     $size = trim($_POST['size']);
     $color = trim($_POST['color']);
     $description = trim($_POST['description']);
 
-    // Image
     $image = $_FILES['image']['name'];
     $tmp = $_FILES['image']['tmp_name'];
 
-    if (
-        empty($name) || empty($category) || empty($price) ||
-        empty($size) || empty($color) || empty($description) || empty($image)
-    ) {
+    if (empty($name) || empty($category) || empty($price) || empty($size) || empty($color) || empty($description) || empty($image)) {
         $error = "All fields are required.";
     } else {
-
-        // Choose folder
         $folder = ($category === 'man') ? 'men' : 'women';
-
-        // Image path saved in DB
         $imagePath = "/$folder/" . basename($image);
-
-        // Full server path
         $uploadPath = "../assets/images" . $imagePath;
 
         if (move_uploaded_file($tmp, $uploadPath)) {
-
             $stmt = $conn->prepare("
                 INSERT INTO products (name, category, price, size, color, description, image)
                 VALUES (?, ?, ?, ?, ?, ?, ?)
             ");
-            $stmt->bind_param(
-                "ssdssss",
-                $name,
-                $category,
-                $price,
-                $size,
-                $color,
-                $description,
-                $imagePath
-            );
+            $stmt->bind_param("ssdssss", $name, $category, $price, $size, $color, $description, $imagePath);
             $stmt->execute();
-
-            header("Location: admin_dashboard.php");
-            exit();
-
+            $success = "Product added successfully!";
         } else {
             $error = "Image upload failed.";
         }
     }
 }
-
-
-if (!isset($_SESSION['admin_id'])) {
-    header("Location: admin_login.php");
-    exit();
-}
-
-if (isset($_POST['add_product'])) {
-
-    $name = $_POST['name'];
-    $category = $_POST['category']; // man or woman
-    $price = $_POST['price'];
-    $size = $_POST['size'];
-    $color = $_POST['color'];
-    $description = $_POST['description'];
-
-    // Image upload
-    $image = $_FILES['image']['name'];
-    $tmp = $_FILES['image']['tmp_name'];
-
-    // Choose folder
-    $folder = ($category === 'man') ? 'men' : 'women';
-
-    // Save path IN DATABASE
-    $imagePath = "$folder/" . $image;
-
-    // Move image
-    move_uploaded_file($tmp, "../assets/images/" . $imagePath);
-
-    // Insert product
-    $stmt = $conn->prepare("
-        INSERT INTO products (name, category, price, size, color, description, image)
-        VALUES (?, ?, ?, ?, ?, ?, ?)
-    ");
-
-    $stmt->bind_param(
-        "ssdssss",
-        $name,
-        $category,
-        $price,
-        $size,
-        $color,
-        $description,
-        $imagePath
-    );
-
-    $stmt->execute();
-
-    header("Location: admin_dashboard.php?success=1");
-    exit();
-}
 ?>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Add Product - ALOLLUXX AFRICA</title>
-    <style>
-        body {
-            font-family: "Times New Roman", serif;
-            background: #f4f6f9;
-        }
-        .container {
-            width: 500px;
-            margin: 60px auto;
-            background: #fff;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-        }
-        h2 {
-            text-align: center;
-            color: #007BFF;
-        }
-        input, select, textarea {
-            width: 100%;
-            padding: 10px;
-            margin: 8px 0;
-        }
-        button {
-            width: 100%;
-            padding: 12px;
-            background: #007BFF;
-            color: white;
-            border: none;
-            font-size: 16px;
-            cursor: pointer;
-        }
-        button:hover {
-            background: #0056b3;
-        }
-        .error {
-            color: red;
-            text-align: center;
-        }
-        a {
-            display: block;
-            margin-top: 15px;
-            text-align: center;
-        }
-    </style>
+<meta charset="UTF-8">
+<title>Add Product - ALOLUXX AFRICA</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+<style>
+body {
+    font-family: 'Montserrat', sans-serif;
+    background: linear-gradient(135deg, #fbd3e9, #bb377d);
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.container {
+    background: #fff;
+    width: 100%;
+    max-width: 500px;
+    padding: 50px 30px 30px 30px; /* extra top padding for branding */
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+header h1 {
+    color: #a855f7;
+    font-size: 36px; /* bigger branding */
+    text-align: center;
+    margin-bottom: 35px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+h2 {
+    color: #a855f7;
+    font-size: 22px;
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 10px 12px; /* slightly smaller than before */
+    border-radius: 10px;
+    border: 1px solid #e5e7eb;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: #f472b6;
+    box-shadow: 0 0 8px rgba(244,114,182,0.4);
+}
+
+textarea { resize: vertical; min-height: 80px; }
+
+button {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(90deg,#f472b6,#ec4899);
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+button:hover {
+    background: linear-gradient(90deg,#ec4899,#db2777);
+    transform: translateY(-2px);
+}
+
+.error, .success {
+    width: 100%;
+    padding: 12px;
+    border-radius: 10px;
+    font-weight: 600;
+    text-align: center;
+}
+
+.error {
+    background: #f87171;
+    color: #fff;
+    margin-bottom: 15px;
+}
+
+.success {
+    background: #34d399;
+    color: #fff;
+    margin-bottom: 15px;
+}
+
+a.btn-back {
+    margin-top: 20px;
+    display: inline-block;
+    text-decoration: none;
+    background: linear-gradient(90deg,#f472b6,#ec4899);
+    color: #fff;
+    padding: 12px 20px;
+    border-radius: 10px;
+    font-weight: 600;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+a.btn-back:hover {
+    background: linear-gradient(90deg,#ec4899,#db2777);
+    transform: translateY(-2px);
+}
+
+@media (max-width: 480px) {
+    .container { padding: 40px 20px; }
+    header h1 { font-size: 28px; }
+    h2 { font-size: 20px; }
+}
+</style>
 </head>
 <body>
-<header>
-    <nav>
-    <h1 style="text-align:center; padding:20px; background-color:#007BFF; color:white;">ALOLLUXX AFRICA - Admin Panel</h1>
-
-    <button type="submit" name ="add" style="text-align: center; padding:10px; background-color:green; color:white; border:none; border-radius:5px; hover: #0056; cursor:pointer; length:px; margin-bottom:20px;">
-        <a href="../index.php">Go to Main Site</a></button>
-    </nav>
-</header>
 
 <div class="container">
+    <header>
+        <h1>ALLOLUX AFRICA</h1>
+    </header>
+
+    <?php if ($error) echo "<div class='error'>$error</div>"; ?>
+    <?php if ($success) echo "<div class='success'>$success</div>"; ?>
+
     <h2>Add Product</h2>
-
-    <?php if ($error) echo "<p class='error'>$error</p>"; ?>
-
     <form method="POST" enctype="multipart/form-data">
-
         <input type="text" name="name" placeholder="Product Name" required>
-
         <select name="category" required>
             <option value="">Select Category</option>
             <option value="man">Men</option>
             <option value="woman">Women</option>
         </select>
-
         <input type="number" step="0.01" name="price" placeholder="Price" required>
         <input type="text" name="size" placeholder="Size (S, M, L)" required>
         <input type="text" name="color" placeholder="Color" required>
-
         <textarea name="description" placeholder="Description" required></textarea>
-
         <input type="file" name="image" accept=".jpg,.jpeg,.png" required>
-
         <button type="submit" name="add">Add Product</button>
     </form>
 
-    <a href="admin_dashboard.php"> Back to Dashboard</a>
+    <a href="admin_dashboard.php" class="btn-back"> Back to Dashboard</a>
 </div>
 
 </body>

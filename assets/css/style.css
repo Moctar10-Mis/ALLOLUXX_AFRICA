@@ -297,4 +297,108 @@ button, .btn {
     padding: 8px;
 }
 
+/* ================== EDIT SINGLE PRODUCT PAGE ================== */
+body {
+    font-family: "Segoe UI", Tahoma, sans-serif;
+    background: #f4f6f9;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 600px;
+    margin: 50px auto;
+    background: #fff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 25px;
+    color: #111827;
+    font-size: 24px;
+}
+
+form label {
+    display: block;
+    margin: 12px 0 6px;
+    font-weight: 600;
+    color: #374151;
+}
+
+form input[type="text"],
+form input[type="number"],
+form textarea,
+form input[type="file"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 15px;
+    box-sizing: border-box;
+}
+
+form textarea {
+    resize: vertical;
+}
+
+.btn {
+    padding: 12px 20px;
+    margin-top: 15px;
+    display: inline-block;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 15px;
+    transition: all 0.2s ease;
+}
+
+.btn:hover {
+    opacity: 0.9;
+}
+
+.btn-primary {
+    background: #2563eb;
+    color: #fff;
+}
+
+.success {
+    background: #10b981;
+    color: #fff;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.error {
+    background: #dc2626;
+    color: #fff;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+img.product-image {
+    display: block;
+    max-width: 200px;
+    margin: 10px auto 15px auto;
+    border-radius: 8px;
+    border: 1px solid #e5e7eb;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 640px) {
+    .container {
+        margin: 20px;
+        padding: 20px;
+    }
+}
+
+
+
+
 

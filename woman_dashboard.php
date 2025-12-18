@@ -87,7 +87,7 @@ window.onpopstate = function () {
     <div class="products-container">
 
         <?php
-        $category = 'woman'; // MUST MATCH DATABASE
+        $category = 'woman'; 
         $query = "SELECT * FROM products WHERE category='$category'";
         $result = mysqli_query($conn, $query);
 

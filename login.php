@@ -33,8 +33,7 @@ window.onpopstate = function () {
 </script>
 <body>
 <header>
-
-
+    
 
     <div class="header-container">
         <h1>ALOLLUXX AFRICA</h1>

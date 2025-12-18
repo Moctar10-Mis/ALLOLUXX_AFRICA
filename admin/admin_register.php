@@ -51,100 +51,155 @@ if (isset($_POST['register'])) {
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Admin Register - ALOLUXX AFRICA</title>
+<title>Admin Register - ALLOLUX AFRICA</title>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
 <style>
+/* ===== Body & Background ===== */
 body {
-    font-family: times, 'Times New Roman', Times, serif;
-    background: linear-gradient(to right, #007BFF, #00BFFF);
+    font-family: 'Montserrat', sans-serif;
+    background: linear-gradient(135deg, #fbd3e9, #bb377d); /* soft pastel pink-purple gradient */
+    margin: 0;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-    margin: 0;
+    min-height: 100vh;
 }
 
+/* ===== Container Card ===== */
 .container {
-    background: #fff;
-    padding: 40px 50px;
-    border-radius: 12px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    background: #ffffff;
+    padding: 50px 40px;
+    border-radius: 15px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.15);
     width: 400px;
+    max-width: 90%;
     text-align: center;
+    position: relative;
 }
 
-h1 {
-    font-size: 32px;
-    font-weight: 700;
-    color: #007BFF;
-    margin-bottom: 30px;
+/* ===== Branding Header ===== */
+.container h1 {
+    font-size: 28px;
+    font-weight: 800;
+    color: #a855f7; /* soft purple */
+    margin-bottom: 25px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
+/* ===== Inputs ===== */
 input {
     width: 100%;
     padding: 12px 15px;
-    margin: 8px 0;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-    font-size: 16px;
+    margin: 12px 0;
+    border-radius: 10px;
+    border: 1px solid #e5e7eb;
+    font-size: 15px;
+    transition: all 0.3s ease;
 }
 
+input:focus {
+    outline: none;
+    border-color: #f472b6; /* pink highlight */
+    box-shadow: 0 0 8px rgba(244,114,182,0.4);
+}
+
+/* ===== Buttons ===== */
 button {
     width: 100%;
-    padding: 12px;
+    padding: 14px 20px;
     margin-top: 15px;
     border: none;
-    background: #007BFF;
+    background: linear-gradient(90deg, #f472b6, #ec4899); /* pink gradient */
     color: #fff;
-    font-size: 18px;
-    font-weight: bold;
-    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 10px;
     cursor: pointer;
+    transition: all 0.3s ease;
 }
 
 button:hover {
-    background: #0056b3;
+    background: linear-gradient(90deg, #ec4899, #db2777);
+    transform: translateY(-2px);
 }
 
+/* ===== Messages ===== */
 .error {
-    color: #dc3545;
+    background: #f87171; /* soft red */
+    color: #fff;
+    padding: 12px;
+    border-radius: 8px;
     margin-bottom: 15px;
+    font-weight: 600;
+    text-align: center;
 }
 
 .success {
-    color: #28a745;
+    background: #34d399; /* soft green */
+    color: #fff;
+    padding: 12px;
+    border-radius: 8px;
     margin-bottom: 15px;
+    font-weight: 600;
+    text-align: center;
 }
 
+/* ===== Links ===== */
 a {
-    color: #007BFF;
+    color: #a855f7; /* soft purple */
     text-decoration: none;
+    font-weight: 600;
 }
 
 a:hover {
     text-decoration: underline;
 }
 
-a:hover {
-    text-decoration: underline;
-}
-
-
+/* ===== Back Button ===== */
 .btn-back {
     display: inline-block;
     margin-top: 20px;
-    padding: 10px 20px;
-    background: #28a745;
+    padding: 12px 20px;
+    background: linear-gradient(90deg, #f472b6, #ec4899);
     color: #fff;
+    border-radius: 10px;
     text-decoration: none;
-    border-radius: 5px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-back:hover {
+    background: linear-gradient(90deg, #ec4899, #db2777);
+    transform: translateY(-2px);
+}
+
+/* ===== Footer Text ===== */
+p.footer-text {
+    margin-top: 20px;
+    font-size: 14px;
+    color: #4b5563;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 480px) {
+    .container {
+        padding: 35px 25px;
+    }
+    h1 {
+        font-size: 24px;
+    }
+    button, .btn-back {
+        font-size: 14px;
+        padding: 12px 15px;
+    }
 }
 </style>
 </head>
 <body>
 
 <div class="container">
-    <h1>ALOLLUXX Admin Register</h1>
+    <h1>ALLOLUX AFRICA</h1>
 
     <?php if ($error) echo "<div class='error'>$error</div>"; ?>
     <?php if ($success) echo "<div class='success'>$success</div>"; ?>
@@ -156,11 +211,11 @@ a:hover {
         <input type="password" name="confirm_password" placeholder="Confirm Password" required>
         <button type="submit" name="register">Register</button>
     </form>
-    <p style="margin-top: 20px;">Already have an account? <a href="admin_login.php">Login here</a></p>
-    </div><p style="margin-top: 20px; text-align:center;">
-    <a href="../index.php" class="btn-back">  Go Back to Main Site</a>
-</p>
 
+    <p class="footer-text">Already have an account? <a href="admin_login.php">Login here</a></p>
+
+    <a href="../index.php" class="btn-back">  Go Back to Main Site</a>
+</div>
 
 </body>
 </html>
