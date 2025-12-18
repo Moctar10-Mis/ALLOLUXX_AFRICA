@@ -19,7 +19,7 @@ foreach ($_SESSION['cart'] as $item) {
     $cartCount += $item['quantity'];
 }
 
-// Handle Add to Cart from this dashboard
+// Handle Add to Cart
 if (isset($_GET['add'])) {
     $id = intval($_GET['add']);
 
@@ -58,12 +58,9 @@ if (isset($_GET['add'])) {
 <script>
 // Disable browser back button
 history.pushState(null, null, location.href);
-window.onpopstate = function () {
-    history.go(1); // prevents going back
-};
+window.onpopstate = function () { history.go(1); };
 </script>
 </head>
-
 <body>
 <header>
     <div class="header-container">
@@ -87,7 +84,7 @@ window.onpopstate = function () {
     <div class="products-container">
 
         <?php
-        $category = 'man'; // MUST MATCH DATABASE
+        $category = 'Men'; // Match exactly what is in the database
         $query = "SELECT * FROM products WHERE category='$category'";
         $result = mysqli_query($conn, $query);
 
@@ -95,7 +92,7 @@ window.onpopstate = function () {
         ?>
 
         <div class="product-card">
-            <img src="assets/images/<?php echo $product['image']; ?>" alt="<?php echo htmlspecialchars($product['name']); ?>">
+            <img src="<?php echo $product['image']; ?>" alt="<?php echo htmlspecialchars($product['name']); ?>">
             <h3><?php echo htmlspecialchars($product['name']); ?></h3>
             <p>$<?php echo number_format($product['price'], 2); ?></p>
 
@@ -112,41 +109,30 @@ window.onpopstate = function () {
 
 <section class="dashboard-cards">
     <div class="cards">
-
-        <!-- CART -->
         <div class="card">
             <i class="fas fa-shopping-cart fa-3x"></i>
             <h3>Cart</h3>
             <p>View items you have added to your cart.</p>
-            <a href="cart.php" class="btn-card">
-                Go to Cart (<?php echo $cartCount; ?>)
-            </a>
+            <a href="cart.php" class="btn-card">Go to Cart (<?php echo $cartCount; ?>)</a>
         </div>
-
-        <!-- ORDERS -->
         <div class="card">
             <i class="fas fa-box fa-3x"></i>
             <h3>Orders</h3>
             <p>Check your previous orders.</p>
             <a href="orders.php" class="btn-card">View Orders</a>
         </div>
-
-        <!-- PAYMENT -->
         <div class="card">
             <i class="fas fa-credit-card fa-3x"></i>
             <h3>Payment</h3>
             <p>Complete your purchase securely.</p>
             <a href="checkout.php" class="btn-card">Proceed to Payment</a>
         </div>
-
-        <!-- PURCHASES -->
         <div class="card">
             <i class="fas fa-credit-card fa-3x"></i>
             <h3>Purchases</h3>
             <p>See your completed purchases.</p>
             <a href="purchases.php" class="btn-card">View Purchases</a>
         </div>
-
     </div>
 </section>
 
