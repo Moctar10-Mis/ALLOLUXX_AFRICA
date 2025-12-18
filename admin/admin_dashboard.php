@@ -105,17 +105,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_admin'])) {
     }
 }
 
+// Unread support messages
 $unread = $conn->query("
     SELECT COUNT(*) AS total 
     FROM support_messages 
     WHERE sender='user'
 ")->fetch_assoc()['total'];
 
-
 $chat_user_id = isset($_GET['user_id']) ? intval($_GET['user_id']) : 0;
-
-
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -338,7 +337,7 @@ img { max-width:60px; border-radius:6px; }
             <?= $unread ?>
         </span>
     <?php endif; ?>
-</a>
+    </a>
 
 </div>
 
@@ -359,7 +358,6 @@ function loadAdminChat(uid){
 setInterval(() => loadAdminChat(USER_ID), 2000);
 loadAdminChat(USER_ID);
 </script>
-
 
 </body>
 </html>
