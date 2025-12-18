@@ -51,16 +51,14 @@ if (isset($_GET['add'])) {
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Man Dashboard - ALOLLUXX AFRICA</title>
+<title>Women Dashboard - ALOLLUXX AFRICA</title>
 <link rel="stylesheet" href="assets/css/style.css">
 <link rel="stylesheet" href="assets/css/dashboard.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <script>
 // Disable browser back button
 history.pushState(null, null, location.href);
-window.onpopstate = function () {
-    history.go(1); // prevents going back
-};
+window.onpopstate = function () { history.go(1); };
 </script>
 </head>
 
@@ -74,7 +72,7 @@ window.onpopstate = function () {
     </div>
 </header>
 
-<section class="dashboard-hero man-hero">
+<section class="dashboard-hero woman-hero">
     <h2>Welcome <?php echo $_SESSION['full_name']; ?>!!</h2>
     <div class="dash-image">
         <img src="assets/images/women/image3.jpeg" alt="Dashboard Photo">
@@ -87,7 +85,7 @@ window.onpopstate = function () {
     <div class="products-container">
 
         <?php
-        $category = 'woman'; 
+        $category = 'Women'; // Match the database
         $query = "SELECT * FROM products WHERE category='$category'";
         $result = mysqli_query($conn, $query);
 
@@ -95,7 +93,7 @@ window.onpopstate = function () {
         ?>
 
         <div class="product-card">
-            <img src="assets/images/<?php echo $product['image']; ?>" alt="<?php echo htmlspecialchars($product['name']); ?>">
+            <img src="<?php echo $product['image']; ?>" alt="<?php echo htmlspecialchars($product['name']); ?>">
             <h3><?php echo htmlspecialchars($product['name']); ?></h3>
             <p>$<?php echo number_format($product['price'], 2); ?></p>
 
@@ -113,17 +111,13 @@ window.onpopstate = function () {
 <section class="dashboard-cards">
     <div class="cards">
 
-        <!-- CART -->
         <div class="card">
             <i class="fas fa-shopping-cart fa-3x"></i>
             <h3>Cart</h3>
             <p>View items you have added to your cart.</p>
-            <a href="cart.php" class="btn-card">
-                Go to Cart (<?php echo $cartCount; ?>)
-            </a>
+            <a href="cart.php" class="btn-card">Go to Cart (<?php echo $cartCount; ?>)</a>
         </div>
 
-        <!-- ORDERS -->
         <div class="card">
             <i class="fas fa-box fa-3x"></i>
             <h3>Orders</h3>
@@ -131,7 +125,6 @@ window.onpopstate = function () {
             <a href="orders.php" class="btn-card">View Orders</a>
         </div>
 
-        <!-- PAYMENT -->
         <div class="card">
             <i class="fas fa-credit-card fa-3x"></i>
             <h3>Payment</h3>
@@ -139,7 +132,6 @@ window.onpopstate = function () {
             <a href="checkout.php" class="btn-card">Proceed to Payment</a>
         </div>
 
-        <!-- PURCHASES -->
         <div class="card">
             <i class="fas fa-credit-card fa-3x"></i>
             <h3>Purchases</h3>
