@@ -2,6 +2,26 @@
 session_start();
 include '../php/config.php';
 
+if ($result->num_rows === 1) {
+    $admin = $result->fetch_assoc();
+    if (password_verify($password, $admin['password'])) {
+        $_SESSION['admin_id'] = $admin['id'];
+        $_SESSION['admin_username'] = $admin['username'];
+
+        // Redirect to admin dashboard
+        header("Location: admin_dashboard.php");
+        exit();
+    } else {
+        $_SESSION['login_error'] = "Incorrect password.";
+        header("Location: admin_login.php");
+        exit();
+    }
+} else {
+    $_SESSION['login_error'] = "Admin not found.";
+    header("Location: admin_login.php");
+    exit();
+}
+
 // Prevent caching
 header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
 header("Cache-Control: post-check=0, pre-check=0", false);
