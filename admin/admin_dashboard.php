@@ -7,7 +7,7 @@ header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
 header("Cache-Control: post-check=0, pre-check=0", false);
 header("Pragma: no-cache");
 
-// Redirect if not logged in
+// Make sure user is logged in and is admin
 if (!isset($_SESSION['admin_id'])) {
     header("Location: admin_login.php");
     exit();
