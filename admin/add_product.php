@@ -25,9 +25,10 @@ if (isset($_POST['add'])) {
     if (empty($name) || empty($category) || empty($price) || empty($size) || empty($color) || empty($description) || empty($image)) {
         $error = "All fields are required.";
     } else {
+        // Fix: set correct folder and paths
         $folder = ($category === 'man') ? 'men' : 'women';
-        $imagePath = "/$folder/" . basename($image);
-        $uploadPath = "../assets/images" . $imagePath;
+        $uploadPath = "../assets/images/$folder/" . basename($image); // server path
+        $imagePath = "assets/images/$folder/" . basename($image);   // path stored in DB
 
         if (move_uploaded_file($tmp, $uploadPath)) {
             $stmt = $conn->prepare("
@@ -35,8 +36,11 @@ if (isset($_POST['add'])) {
                 VALUES (?, ?, ?, ?, ?, ?, ?)
             ");
             $stmt->bind_param("ssdssss", $name, $category, $price, $size, $color, $description, $imagePath);
-            $stmt->execute();
-            $success = "Product added successfully!";
+            if ($stmt->execute()) {
+                $success = "Product added successfully!";
+            } else {
+                $error = "Failed to add product.";
+            }
         } else {
             $error = "Image upload failed.";
         }
@@ -50,131 +54,23 @@ if (isset($_POST['add'])) {
 <title>Add Product - ALOLUXX AFRICA</title>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
 <style>
-body {
-    font-family: 'Montserrat', sans-serif;
-    background: linear-gradient(135deg, #fbd3e9, #bb377d);
-    margin: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    padding: 20px;
-}
-
-.container {
-    background: #fff;
-    width: 100%;
-    max-width: 500px;
-    padding: 50px 30px 30px 30px; /* extra top padding for branding */
-    border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-header h1 {
-    color: #a855f7;
-    font-size: 36px; /* bigger branding */
-    text-align: center;
-    margin-bottom: 35px;
-    font-weight: 900;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-h2 {
-    color: #a855f7;
-    font-size: 22px;
-    margin-bottom: 25px;
-    text-align: center;
-}
-
-form {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-
-input, select, textarea {
-    width: 100%;
-    padding: 10px 12px; /* slightly smaller than before */
-    border-radius: 10px;
-    border: 1px solid #e5e7eb;
-    font-size: 14px;
-    transition: all 0.3s ease;
-}
-
-input:focus, select:focus, textarea:focus {
-    outline: none;
-    border-color: #f472b6;
-    box-shadow: 0 0 8px rgba(244,114,182,0.4);
-}
-
+/* Keep all your styling exactly the same */
+body { font-family: 'Montserrat', sans-serif; background: linear-gradient(135deg, #fbd3e9, #bb377d); margin: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; }
+.container { background: #fff; width: 100%; max-width: 500px; padding: 50px 30px 30px 30px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.15); display: flex; flex-direction: column; align-items: center; }
+header h1 { color: #a855f7; font-size: 36px; text-align: center; margin-bottom: 35px; font-weight: 900; text-transform: uppercase; letter-spacing: 1px; }
+h2 { color: #a855f7; font-size: 22px; margin-bottom: 25px; text-align: center; }
+form { width: 100%; display: flex; flex-direction: column; gap: 15px; }
+input, select, textarea { width: 100%; padding: 10px 12px; border-radius: 10px; border: 1px solid #e5e7eb; font-size: 14px; transition: all 0.3s ease; }
+input:focus, select:focus, textarea:focus { outline: none; border-color: #f472b6; box-shadow: 0 0 8px rgba(244,114,182,0.4); }
 textarea { resize: vertical; min-height: 80px; }
-
-button {
-    width: 100%;
-    padding: 14px;
-    border: none;
-    border-radius: 10px;
-    background: linear-gradient(90deg,#f472b6,#ec4899);
-    color: #fff;
-    font-size: 16px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-button:hover {
-    background: linear-gradient(90deg,#ec4899,#db2777);
-    transform: translateY(-2px);
-}
-
-.error, .success {
-    width: 100%;
-    padding: 12px;
-    border-radius: 10px;
-    font-weight: 600;
-    text-align: center;
-}
-
-.error {
-    background: #f87171;
-    color: #fff;
-    margin-bottom: 15px;
-}
-
-.success {
-    background: #34d399;
-    color: #fff;
-    margin-bottom: 15px;
-}
-
-a.btn-back {
-    margin-top: 20px;
-    display: inline-block;
-    text-decoration: none;
-    background: linear-gradient(90deg,#f472b6,#ec4899);
-    color: #fff;
-    padding: 12px 20px;
-    border-radius: 10px;
-    font-weight: 600;
-    text-align: center;
-    transition: all 0.3s ease;
-}
-
-a.btn-back:hover {
-    background: linear-gradient(90deg,#ec4899,#db2777);
-    transform: translateY(-2px);
-}
-
-@media (max-width: 480px) {
-    .container { padding: 40px 20px; }
-    header h1 { font-size: 28px; }
-    h2 { font-size: 20px; }
-}
+button { width: 100%; padding: 14px; border: none; border-radius: 10px; background: linear-gradient(90deg,#f472b6,#ec4899); color: #fff; font-size: 16px; font-weight: 600; cursor: pointer; transition: all 0.3s ease; }
+button:hover { background: linear-gradient(90deg,#ec4899,#db2777); transform: translateY(-2px); }
+.error, .success { width: 100%; padding: 12px; border-radius: 10px; font-weight: 600; text-align: center; }
+.error { background: #f87171; color: #fff; margin-bottom: 15px; }
+.success { background: #34d399; color: #fff; margin-bottom: 15px; }
+a.btn-back { margin-top: 20px; display: inline-block; text-decoration: none; background: linear-gradient(90deg,#f472b6,#ec4899); color: #fff; padding: 12px 20px; border-radius: 10px; font-weight: 600; text-align: center; transition: all 0.3s ease; }
+a.btn-back:hover { background: linear-gradient(90deg,#ec4899,#db2777); transform: translateY(-2px); }
+@media (max-width: 480px) { .container { padding: 40px 20px; } header h1 { font-size: 28px; } h2 { font-size: 20px; } }
 </style>
 </head>
 <body>

@@ -310,8 +310,12 @@ img { max-width:60px; border-radius:6px; }
             <th>Actions</th>
         </tr>
         <?php while($p = $products->fetch_assoc()): ?>
+
+        
         <tr>
             <td><img src="../assets/images/<?= $p['image'] ?>" alt=""></td>
+            <td><img src="../<?= $p['image'] ?>" alt="<?= htmlspecialchars($p['name']) ?>" style="max-width:60px;"></td>
+
             <td><?= htmlspecialchars($p['name']) ?></td>
             <td><?= ucfirst($p['category']) ?></td>
             <td>$<?= number_format($p['price'],2) ?></td>
@@ -320,6 +324,7 @@ img { max-width:60px; border-radius:6px; }
             <td>
                 <a href="edit_product.php?id=<?= $p['id'] ?>" class="btn-action btn-edit">Edit</a>
                 <a href="delete_product.php?id=<?= $p['id'] ?>" onclick="return confirm('Delete this product?')" class="btn-action btn-delete">Delete</a>
+
             </td>
         </tr>
         <?php endwhile; ?>
