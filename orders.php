@@ -7,8 +7,8 @@ error_reporting(E_ALL);
 // Start session
 session_start();
 
-// Include database connection
-require_once 'config.php';
+// Include config.php (adjust path if needed)
+require_once __DIR__ . '/config.php'; // __DIR__ ensures the path is correct
 
 // Check if user is logged in
 if(!isset($_SESSION['user_id'])){
@@ -16,13 +16,13 @@ if(!isset($_SESSION['user_id'])){
     exit;
 }
 
-// Determine dashboard based on gender (optional)
+// Determine dashboard based on gender
 $dashboard = (isset($_SESSION['gender']) && $_SESSION['gender'] === 'male') ? 'man_dashboard.php' : 'woman_dashboard.php';
 
 // Get cart items from session
 $cart = isset($_SESSION['cart']) ? $_SESSION['cart'] : [];
-
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
