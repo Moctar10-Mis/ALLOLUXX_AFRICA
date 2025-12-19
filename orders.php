@@ -132,10 +132,15 @@ $result = $stmt->get_result();
                         <tr>
                             <td>
                                 <?php 
-                                $images = explode(',', $row['images']); // assuming comma-separated
-                                foreach($images as $img): ?>
-                                    <img src="<?php echo trim($img); ?>" alt="Product">
-                                <?php endforeach; ?>
+                                if(!empty($row['images'])){
+                                    $images = explode(',', $row['images']); // comma-separated images
+                                    foreach($images as $img): ?>
+                                        <img src="<?php echo trim($img); ?>" alt="Product">
+                                    <?php endforeach; 
+                                } else {
+                                    echo "No image";
+                                }
+                                ?>
                             </td>
                             <td>$<?php echo number_format($row['total_price'], 2); ?></td>
                             <td><?php echo htmlspecialchars($row['payment_method']); ?></td>
