@@ -1,6 +1,5 @@
 <?php
-<?php
-// Enable error reporting for debugging
+// Enable error reporting
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
@@ -24,8 +23,6 @@ $dashboard = (isset($_SESSION['gender']) && $_SESSION['gender'] === 'male') ? 'm
 $cart = isset($_SESSION['cart']) ? $_SESSION['cart'] : [];
 ?>
 
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -34,14 +31,14 @@ $cart = isset($_SESSION['cart']) ? $_SESSION['cart'] : [];
     <style>
         body {
             font-family: 'Helvetica', Arial, sans-serif;
-            background: #ffe6f0; /* soft luxury pink */
+            background: #ffe6f0; /* luxury pink background */
             margin: 0;
             padding: 20px;
         }
 
         h1 {
             text-align: center;
-            color: #d63384;
+            color: #d63384; /* rich pink */
             font-weight: 700;
             margin-bottom: 20px;
         }
