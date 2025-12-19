@@ -1,6 +1,14 @@
 <?php
+// Enable error reporting for debugging
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+// Start session
 session_start();
-require_once 'config.php'; // your DB connection
+
+// Include database connection
+require_once 'config.php';
 
 // Check if user is logged in
 if(!isset($_SESSION['user_id'])){
@@ -8,10 +16,13 @@ if(!isset($_SESSION['user_id'])){
     exit;
 }
 
+// Determine dashboard based on gender (optional)
+$dashboard = (isset($_SESSION['gender']) && $_SESSION['gender'] === 'male') ? 'man_dashboard.php' : 'woman_dashboard.php';
+
 // Get cart items from session
 $cart = isset($_SESSION['cart']) ? $_SESSION['cart'] : [];
-?>
 
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -101,7 +112,7 @@ $cart = isset($_SESSION['cart']) ? $_SESSION['cart'] : [];
 </head>
 <body>
     <div class="orders-container">
-        <a href="man_dashboard.php" class="back-button">← Back to Dashboard</a>
+        <a href="<?php echo $dashboard; ?>" class="back-button">← Back to Dashboard</a>
         <h1>Your Orders</h1>
 
         <?php if(empty($cart)): ?>
